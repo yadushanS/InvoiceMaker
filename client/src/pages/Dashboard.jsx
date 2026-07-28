@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api.js';
+import { FolderIcon, PlusIcon, TrashIcon } from '../components/Icons.jsx';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ export default function Dashboard() {
           <h1>Your folders</h1>
           <p className="subtitle">Organize invoices into categories, e.g. by client or project.</p>
         </div>
-        <button className="btn btn-primary" onClick={() => setShowNew(true)}>+ New folder</button>
+        <button className="btn btn-primary" onClick={() => setShowNew(true)}><PlusIcon width={16} height={16} /> New folder</button>
       </div>
 
       {error && <div className="error-banner">{error}</div>}
@@ -69,19 +70,19 @@ export default function Dashboard() {
         <div className="empty-state">Loading...</div>
       ) : folders.length === 0 ? (
         <div className="empty-state card">
-          <div className="big-icon">📁</div>
+          <div className="big-icon"><FolderIcon width={24} height={24} /></div>
           <p>No folders yet. Create your first one to start making invoices.</p>
-          <button className="btn btn-primary" onClick={() => setShowNew(true)}>+ New folder</button>
+          <button className="btn btn-primary" onClick={() => setShowNew(true)}><PlusIcon width={16} height={16} /> New folder</button>
         </div>
       ) : (
         <div className="grid">
           {folders.map((f) => (
             <div key={f.id} className="tile" onClick={() => navigate(`/folders/${f.id}`)}>
-              <div className="tile-icon">📁</div>
+              <div className="tile-icon"><FolderIcon /></div>
               <div className="tile-title">{f.name}</div>
               <div className="tile-meta">{f.invoiceCount} invoice{f.invoiceCount === 1 ? '' : 's'}</div>
               <div className="tile-actions" onClick={(e) => e.stopPropagation()}>
-                <button className="btn btn-ghost btn-sm" onClick={() => handleDelete(f.id, f.name)}>Delete</button>
+                <button className="btn btn-ghost btn-sm" onClick={() => handleDelete(f.id, f.name)}><TrashIcon width={15} height={15} /> Delete</button>
               </div>
             </div>
           ))}

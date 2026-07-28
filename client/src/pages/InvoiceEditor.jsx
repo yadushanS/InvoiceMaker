@@ -153,7 +153,7 @@ export default function InvoiceEditor() {
       </div>
 
       {error && <div className="error-banner">{error}</div>}
-      {message && <div className="card" style={{ padding: '10px 14px', marginBottom: 14, color: '#157347', background: '#e6f7ee', border: '1px solid #b7e4c7' }}>{message}</div>}
+      {message && <div className="success-banner">{message}</div>}
 
       <div className="editor-layout">
         <div className="editor-form">

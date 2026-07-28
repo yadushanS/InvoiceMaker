@@ -71,12 +71,12 @@ export default function BusinessSettings() {
       </div>
 
       {error && <div className="error-banner">{error}</div>}
-      {message && <div className="card" style={{ padding: '10px 14px', marginBottom: 14, color: '#157347', background: '#e6f7ee', border: '1px solid #b7e4c7' }}>{message}</div>}
+      {message && <div className="success-banner">{message}</div>}
 
       <div className="card" style={{ marginBottom: 16 }}>
         <h2 style={{ marginTop: 0, fontSize: 16 }}>Logo &amp; brand colors</h2>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-          <div style={{ width: 72, height: 72, borderRadius: 10, border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fafafa' }}>
+          <div style={{ width: 72, height: 72, borderRadius: 10, border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: 'var(--surface-2)' }}>
             {business.logoUrl ? <img src={assetUrl(business.logoUrl)} alt="logo" style={{ maxWidth: '100%', maxHeight: '100%' }} /> : <span style={{ color: 'var(--text-muted)', fontSize: 12 }}>No logo</span>}
           </div>
           <div>

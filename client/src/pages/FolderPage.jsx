@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { api } from '../api.js';
 import { computeTotals, formatMoney } from '../invoiceUtils.js';
+import { DocumentIcon, PlusIcon, PencilIcon, CopyIcon, TrashIcon } from '../components/Icons.jsx';
 
 export default function FolderPage() {
   const { folderId } = useParams();
@@ -62,16 +63,16 @@ export default function FolderPage() {
           <h1>{folder.name}</h1>
           <p className="subtitle">{invoices.length} invoice{invoices.length === 1 ? '' : 's'}</p>
         </div>
-        <button className="btn btn-primary" onClick={() => navigate(`/folders/${folderId}/invoices/new`)}>+ New invoice</button>
+        <button className="btn btn-primary" onClick={() => navigate(`/folders/${folderId}/invoices/new`)}><PlusIcon width={16} height={16} /> New invoice</button>
       </div>
 
       {error && <div className="error-banner">{error}</div>}
 
       {invoices.length === 0 ? (
         <div className="empty-state card">
-          <div className="big-icon">🧾</div>
+          <div className="big-icon"><DocumentIcon width={24} height={24} /></div>
           <p>No invoices in this folder yet.</p>
-          <button className="btn btn-primary" onClick={() => navigate(`/folders/${folderId}/invoices/new`)}>+ New invoice</button>
+          <button className="btn btn-primary" onClick={() => navigate(`/folders/${folderId}/invoices/new`)}><PlusIcon width={16} height={16} /> New invoice</button>
         </div>
       ) : (
         <div>
@@ -80,18 +81,21 @@ export default function FolderPage() {
             return (
               <div key={inv.id} className="list-row">
                 <div className="list-row-main" onClick={() => navigate(`/invoices/${inv.id}`)}>
-                  <div className="list-row-title">
-                    {inv.data.invoiceNumber ? `Invoice #${inv.data.invoiceNumber}` : 'Untitled invoice'}{' '}
-                    <span className={`badge badge-${inv.status}`}>{inv.status}</span>
-                  </div>
-                  <div className="list-row-sub">
-                    {inv.data.billTo?.name || 'No recipient'} · {formatMoney(total, inv.data.currency)}
+                  <div className="list-row-icon"><DocumentIcon width={18} height={18} /></div>
+                  <div>
+                    <div className="list-row-title">
+                      {inv.data.invoiceNumber ? `Invoice #${inv.data.invoiceNumber}` : 'Untitled invoice'}{' '}
+                      <span className={`badge badge-${inv.status}`}>{inv.status}</span>
+                    </div>
+                    <div className="list-row-sub">
+                      {inv.data.billTo?.name || 'No recipient'} · {formatMoney(total, inv.data.currency)}
+                    </div>
                   </div>
                 </div>
                 <div className="list-row-actions">
-                  <button className="btn btn-secondary btn-sm" onClick={() => navigate(`/invoices/${inv.id}`)}>Edit</button>
-                  <button className="btn btn-secondary btn-sm" onClick={() => handleDuplicate(inv.id)}>Duplicate</button>
-                  <button className="btn btn-danger btn-sm" onClick={() => handleDelete(inv.id)}>Delete</button>
+                  <button className="btn btn-secondary btn-sm" onClick={() => navigate(`/invoices/${inv.id}`)}><PencilIcon width={14} height={14} /> Edit</button>
+                  <button className="btn btn-secondary btn-sm" onClick={() => handleDuplicate(inv.id)}><CopyIcon width={14} height={14} /> Duplicate</button>
+                  <button className="btn btn-danger btn-sm" onClick={() => handleDelete(inv.id)}><TrashIcon width={14} height={14} /> Delete</button>
                 </div>
               </div>
             );
