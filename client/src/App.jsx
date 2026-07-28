@@ -1,0 +1,29 @@
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+import Login from './pages/Login.jsx';
+import Register from './pages/Register.jsx';
+import Dashboard from './pages/Dashboard.jsx';
+import FolderPage from './pages/FolderPage.jsx';
+import InvoiceEditor from './pages/InvoiceEditor.jsx';
+import BusinessSettings from './pages/BusinessSettings.jsx';
+
+export default function App() {
+  return (
+    <div className="app-shell">
+      <Navbar />
+      <div className="main-content">
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/folders/:folderId" element={<ProtectedRoute><FolderPage /></ProtectedRoute>} />
+          <Route path="/folders/:folderId/invoices/new" element={<ProtectedRoute><InvoiceEditor /></ProtectedRoute>} />
+          <Route path="/invoices/:invoiceId" element={<ProtectedRoute><InvoiceEditor /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><BusinessSettings /></ProtectedRoute>} />
+        </Routes>
+      </div>
+    </div>
+  );
+}

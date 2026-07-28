@@ -1,0 +1,12 @@
+-- Run this once in MySQL Workbench (connected as root) to set up the app's database.
+-- Replace 'CHANGE_ME' with a password of your choosing, then put the same
+-- value in server/.env as DB_PASSWORD.
+
+CREATE DATABASE IF NOT EXISTS invoice_maker CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE USER IF NOT EXISTS 'invoice_maker_app'@'localhost' IDENTIFIED BY 'CHANGE_ME';
+GRANT ALL PRIVILEGES ON invoice_maker.* TO 'invoice_maker_app'@'localhost';
+FLUSH PRIVILEGES;
+
+-- The app creates its own tables automatically on first run (see server/src/db.js),
+-- so no further schema setup is needed here.

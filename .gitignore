@@ -1,0 +1,16 @@
+node_modules/
+dist/
+build/
+
+.env
+.env.local
+.env.*.local
+
+# Contains a real local DB password once filled in - see setup.sql.example instead
+server/setup.sql
+
+server/uploads/*
+!server/uploads/.gitkeep
+
+*.log
+.DS_Store
