@@ -23,6 +23,35 @@ export default function InvoiceEditor() {
   const [message, setMessage] = useState('');
 
   const previewRef = useRef(null);
+  const previewScrollRef = useRef(null);
+  const [scale, setScale] = useState(1);
+  const [naturalHeight, setNaturalHeight] = useState(0);
+
+  // Shrink the invoice preview to fit small screens instead of forcing horizontal
+  // scroll on a fixed-width document. Desktop is untouched: when the container is
+  // already wide enough, scale stays 1 and nothing changes.
+  useEffect(() => {
+    const scrollEl = previewScrollRef.current;
+    if (!scrollEl) return;
+    const recomputeScale = () => {
+      const available = scrollEl.clientWidth - 40;
+      setScale(Math.min(1, available / 794));
+    };
+    recomputeScale();
+    const ro = new ResizeObserver(recomputeScale);
+    ro.observe(scrollEl);
+    return () => ro.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const pageEl = previewRef.current;
+    if (!pageEl) return;
+    const ro = new ResizeObserver((entries) => {
+      setNaturalHeight(entries[0].contentRect.height);
+    });
+    ro.observe(pageEl);
+    return () => ro.disconnect();
+  }, []);
 
   useEffect(() => {
     if (isNew) {
@@ -239,8 +268,12 @@ export default function InvoiceEditor() {
         </div>
 
         <div className="editor-preview">
-          <div className="preview-scroll">
-            <InvoicePreview ref={previewRef} data={data} logoUrl={assetUrl(business?.logoUrl)} theme={business?.themeColors} />
+          <div className="preview-scroll" ref={previewScrollRef}>
+            <div style={scale < 1 ? { width: 794 * scale, height: naturalHeight ? naturalHeight * scale : undefined } : undefined}>
+              <div style={scale < 1 ? { width: 794, transform: `scale(${scale})`, transformOrigin: 'top left' } : undefined}>
+                <InvoicePreview ref={previewRef} data={data} logoUrl={assetUrl(business?.logoUrl)} theme={business?.themeColors} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
