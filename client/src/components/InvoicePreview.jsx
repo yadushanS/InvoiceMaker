@@ -2,6 +2,41 @@ import React, { forwardRef } from 'react';
 import { computeTotals, formatMoney, formatDateDisplay, lineTotal } from '../invoiceUtils.js';
 import './InvoicePreview.css';
 
+const iconProps = {
+  width: 13,
+  height: 13,
+  viewBox: '0 0 24 24',
+  fill: 'none',
+  stroke: 'currentColor',
+  strokeWidth: 2,
+  strokeLinecap: 'round',
+  strokeLinejoin: 'round',
+};
+
+function UserIcon() {
+  return (
+    <svg {...iconProps}>
+      <circle cx="12" cy="8" r="3.6" />
+      <path d="M4.5 20c1-3.6 4-5.5 7.5-5.5s6.5 1.9 7.5 5.5" />
+    </svg>
+  );
+}
+function PhoneIcon() {
+  return (
+    <svg {...iconProps}>
+      <path d="M5.5 4h3l1.5 4.5-2 1.6a11 11 0 0 0 5.9 5.9l1.6-2 4.5 1.5v3a1.5 1.5 0 0 1-1.6 1.5A16.5 16.5 0 0 1 4 6.6 1.5 1.5 0 0 1 5.5 4Z" />
+    </svg>
+  );
+}
+function MailIcon() {
+  return (
+    <svg {...iconProps}>
+      <rect x="3.5" y="5.5" width="17" height="13" rx="1.8" />
+      <path d="M4.5 6.5 12 12.5l7.5-6" />
+    </svg>
+  );
+}
+
 const InvoicePreview = forwardRef(function InvoicePreview({ data, logoUrl, theme }, ref) {
   const { subtotal, taxAmount, total } = computeTotals(data);
   const items = data.items || [];
@@ -107,9 +142,9 @@ const InvoicePreview = forwardRef(function InvoicePreview({ data, logoUrl, theme
 
       <div className="invoice-footer">
         <div className="footer-contact">
-          {data.from?.contactPerson && <span>👤 {data.from.contactPerson}</span>}
-          {data.from?.phone && <span>📞 {data.from.phone}</span>}
-          {data.from?.email && <span>✉ {data.from.email}</span>}
+          {data.from?.contactPerson && <span><UserIcon /> {data.from.contactPerson}</span>}
+          {data.from?.phone && <span><PhoneIcon /> {data.from.phone}</span>}
+          {data.from?.email && <span><MailIcon /> {data.from.email}</span>}
         </div>
         <div className="footer-bottom">
           <div className="footer-business">
